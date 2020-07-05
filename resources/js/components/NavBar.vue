@@ -59,10 +59,12 @@ import { mapState } from 'vuex';
 export default {
     methods: {
         logout() {
+        this.http.get('/api/sanctum/csrf-cookie').then((resp) =>{
         this.http.post('/api/logout').then((res) => {
             this.$cookies.remove('auth');
             this.$router.push('/');
         });
+      });
     }
 },
 computed: {

@@ -1,28 +1,40 @@
 <template>
-    <div class="flex flex-col items-center justify-center min-h-screen w-full">
-  <!-- Form -->
-  <div class="w-full"
-       style="max-width: 16rem;">
-    <h1 class="mb-3 font-normal text-center">Log in</h1>
-    <div>
-      <label class="block mb-4">
-        <div class="mb-1 text-grey-darkest">Email</div>
-        <input v-model="email" class="w-full py-2 px-3 border rounded outline-none focus:border-blue-light focus:shadow-outline"
-           type="text">
-      </label>
-      <label class="block mb-5">
-        <div class="mb-1 text-grey-darkest">Password</div>
-        <input v-model="password" class="w-full py-2 px-3 border rounded outline-none focus:border-blue-light focus:shadow-outline"
-           type="password">
-      </label>
-      <div class="mb-10">
-        <button class="w-full px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="login()">
-          Log in
-        </button>
+
+<div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+      <div class="col-xl-8 col-lg-6 col-md-6" style="margin-top:50px">
+        <div class="card o-hidden border-0 shadow-lg my-5" style="height:400px;">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+              <div class="col-lg-6 offset-md-3">
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                  </div>
+                    <div class="form-group">
+                      <input v-model="email" type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                    </div>
+                    <div class="form-group">
+                      <input v-model="password" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                    </div>
+                    <button class="btn btn-primary btn-user btn-block" @click="login()">
+                      Login
+                    </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
+
     </div>
+
   </div>
-</div>
 </template>
 
 <script>

@@ -3,7 +3,7 @@
         <NavBar />
         <div class="container">
         <div v-if="search && search.length > 0">
-        <div v-for="(result, index) in search" :key="index" class="card mb-3 text-black" style="max-width: 740px; margin-top: 20px" @click="$router.push(`/listing/${result.id}`)">
+        <div v-for="(result, index) in search" :key="index" class="listing card mb-3 text-black" style="max-width: 740px; margin-top: 20px" @click="$router.push(`/listing/${result.id}`)">
         <div class="row no-gutters">
             <div class="col-md-4">
                 <img :src="result.default_image" :alt="result.name" width="200" height="200" style="object-fit: cover">
