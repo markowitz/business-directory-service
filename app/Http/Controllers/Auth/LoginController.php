@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -40,13 +41,24 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    protected function authenticated(Request $request, $user)
+    public function login(Request $request)
     {
-        //redirect to adminpage
-        return response()->json([
-            'message' => 'user logged in successfully',
-            'user' => $user
-        ], 201);
+        $request->validate([
+            'email' => ['required'],
+            'password' => ['required']
+        ]);
+
+        if (Auth::attempt($request->only('email', 'password'))) {
+           //redirect to adminpage
+                return response()->json([
+                    'message' => 'user logged in successfully',
+                    'user' => Auth::user()
+                ], 201);
+        }
+
+        throw ValidationException::withMessages([
+            'email' => ['The provided credentials are incorrect.']
+        ]);
     }
 
     public function logout()
