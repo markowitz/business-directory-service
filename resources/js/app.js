@@ -12,9 +12,8 @@ import VueSweetalert2 from 'vue-sweetalert2';
 
  require("vue-select/src/scss/vue-select.scss");
 
- let Api = axios.create({baseURL: 'http://localhost:8000/'});
 
- Api.defaults.withCredentials = true;
+ axios.defaults.withCredentials = true;
 
 Vue.mixin({
     data() {
