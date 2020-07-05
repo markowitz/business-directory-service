@@ -19,6 +19,7 @@ Route::post('logout', 'Auth\LoginController@logout');
 
 Route::post('search', 'BusinessListingsController@search');
 Route::get('listing/{listing}', 'BusinessListingsController@listing');
+Route::post('reviews/add', 'ReviewsController@add');
 
 Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin'], function() {
     Route::get('user', function(Request $request){

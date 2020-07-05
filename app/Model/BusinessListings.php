@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class BusinessListings extends Model
 {
 
-    protected $fillable = ['name', 'address', 'phone', 'email', 'description', 'url', 'published'];
+    protected $fillable = ['name', 'address', 'phone', 'email', 'description', 'url', 'published', 'views_count'];
 
     protected $with = ['categories'];
 
@@ -19,7 +19,7 @@ class BusinessListings extends Model
 
     ];
 
-    protected $appends = ['default_image'];
+    protected $appends = ['default_image', 'images_url', 'review_avg'];
 
     public function categories()
     {
@@ -34,6 +34,29 @@ class BusinessListings extends Model
     public function images()
     {
         return $this->hasMany(ListingImages::class);
+    }
+
+    public function getImagesUrlAttribute()
+    {
+        $images = $this->images;
+        $newImages = [];
+        foreach($images as $image) {
+            $newImages[] =  env('APP_URL')."/{$image->image_path}";
+        }
+
+        return $newImages;
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Reviews::class, 'listing_id');
+    }
+
+    public function getReviewAvgAttribute()
+    {
+        $avg = collect($this->reviews->pluck('rate'))->avg();
+
+        return $avg ?? 0;
     }
 
     public function getDefaultImageAttribute()
