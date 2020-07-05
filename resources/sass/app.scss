@@ -1,0 +1,30 @@
+.jumbotron {
+    margin-bottom: 0;
+    height: 100vh;
+
+    h2 {
+        font-size: 28px;
+    }
+}
+
+.align-jumbotron {
+    margin-top: 25vh;
+}
+
+.fa-star.checked {
+    color: orange;
+}
+
+.card {
+    &:hover {
+        background-color: #fcf8e3;
+        cursor: pointer;
+    }
+}
+
+.listing-view-rate {
+    bottom: 20px;
+    position: absolute;
+    display: flex;
+    justify-content: space-evenly;
+}
