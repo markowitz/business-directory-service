@@ -19,6 +19,7 @@ class ListingsRepository extends BaseRepository
 
     public function search(string $search = null)
     {
+
         return $this->listings->approved()->querySearch($search)->get();
     }
 

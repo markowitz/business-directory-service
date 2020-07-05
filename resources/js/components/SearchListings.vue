@@ -62,8 +62,7 @@ import NavBar from './NavBar';
             let url = this.$route.query.search;
 
             if(url !== null) {
-                const {search} = url;
-                this.http.post('/api/search', {search}).then((resp) => {
+                this.http.post('/api/search', {search: url}).then((resp) => {
                     this.search = resp.data.data;
                 });
             }

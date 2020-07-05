@@ -77,6 +77,7 @@ class BusinessListingsController extends Controller
     {
         $search = $request->search;
 
+
         $results = $this->listingsRepo->search($search);
 
         return $this->respondWithSuccess($results, "data fetched successfully", 201);

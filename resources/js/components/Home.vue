@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
     export default {
         data() {
             return {
@@ -23,7 +22,6 @@ import { mapMutations } from 'vuex';
             }
         },
         methods: {
-            ...mapMutations(['setSearchData']),
             goToSearchListing() {
             if (this.search != null) {
                 this.$router.push({path:'search', query: {search: this.search}});
