@@ -85,7 +85,7 @@ class BusinessListings extends Model
     public function scopeRatings($query)
     {
         return $query->leftJoin('reviews', 'reviews.listing_id', '=', 'business_listings.id')
-                        ->select('business_listings.*', DB::raw("IF(AVG(reviews.rate), AVG(reviews.rate), 0) as avg_rating"))
-                        ->groupBy('business_listings.id', 'business_listings.name')->orderBy('avg_rating', 'DESC');
+                        ->select('business_listings.id', DB::raw("IF(AVG(reviews.rate), AVG(reviews.rate), 0) as avg_rating"))
+                        ->groupBy('business_listings.id')->orderBy('avg_rating', 'DESC');
     }
 }
