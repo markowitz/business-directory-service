@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class BusinessListings extends Model
 {
@@ -68,16 +69,23 @@ class BusinessListings extends Model
 
     public function scopeQuerySearch($query, $search)
     {
-        return $query->where('name', 'LIKE', "%$search%")
-                        ->orWhere('email', 'LIKE', "%$search%")
-                        ->orWhere('address', 'LIKE', "%$search%")
-                        ->orWhere('phone', 'LIKE', "%$search%")
-                        ->orWhere('description', 'LIKE', "%$search%")
-                        ->orWhere('url', 'LIKE', "%$search%");
+        return $query->where('business_listings.name', 'LIKE', "%$search%")
+                        ->orWhere('business_listings.email', 'LIKE', "%$search%")
+                        ->orWhere('business_listings.address', 'LIKE', "%$search%")
+                        ->orWhere('business_listings.phone', 'LIKE', "%$search%")
+                        ->orWhere('business_listings.description', 'LIKE', "%$search%")
+                        ->orWhere('business_listings.url', 'LIKE', "%$search%");
     }
 
     public function scopeApproved($query)
     {
         return $query->where('published', 1);
+    }
+
+    public function scopeRatings($query)
+    {
+        return $query->leftJoin('reviews', 'reviews.listing_id', '=', 'business_listings.id')
+                        ->select('business_listings.*', DB::raw("IF(AVG(reviews.rate), AVG(reviews.rate), 0) as avg_rating"))
+                        ->groupBy('business_listings.id')->orderBy('avg_rating', 'DESC');
     }
 }

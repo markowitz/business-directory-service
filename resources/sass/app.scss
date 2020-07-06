@@ -23,13 +23,19 @@
 }
 
 .listing-view-rate {
-    bottom: 20px;
-    position: absolute;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
+    flex-wrap: wrap;
 }
 
 a.send-to-home {
     text-decoration: none;
     color: #00A0B2;
+}
+
+.table-hover {
+    &:hover {
+        background-color: rgba(1,155,227,.12);
+        cursor: pointer;
+    }
 }

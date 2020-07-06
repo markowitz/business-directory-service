@@ -5,6 +5,7 @@ import Categories from './components/Categories';
 import Login from './components/Login';
 import SearchListings from './components/SearchListings';
 import ViewListing from './components/ViewListing';
+import ViewAdminListing from './components/ViewAdminListing';
 import { authProtect, middleware, redirect, guest } from './middleware';
 
 export default {
@@ -24,6 +25,11 @@ export default {
                 {
                     path: 'categories',
                     component: Categories
+                },
+                {
+                    path: 'listing/:id',
+                    component: ViewAdminListing,
+                    name: 'view admin listing'
                 }
             ]
         },

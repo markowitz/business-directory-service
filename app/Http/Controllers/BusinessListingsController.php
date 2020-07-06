@@ -47,7 +47,7 @@ class BusinessListingsController extends Controller
     public function listings()
     {
 
-        $listings = BusinessListings::all();
+        $listings = $this->listingsRepo->sortByRating();
 
         return $this->respondWithSuccess($listings, '', 201);
     }
@@ -56,17 +56,17 @@ class BusinessListingsController extends Controller
     {
         $request = $request->validated();
 
-        if(isset($request['published'])) {
-            $update = $this->listingsRepo->update($request, $listing->id);
-            return $this->respondWithSuccess("", "listing updated successfully", 201);
-        }
 
-        $categories = $request['categories'];
+        $categories = isset($request['categories']) ? $request['categories'] : null;
 
-        DB::transaction(function () use ($request, $categories) {
-            $listing = $this->listingsRepo->update($request);
+        DB::transaction(function () use ($request, $categories, $listing) {
+            if($categories) {
+                unset($request['categories']);
+                $listing->categories()->sync($categories);
+            }
 
-            $listing->categories()->attach($categories);
+            $listings = $this->listingsRepo->update($request, $listing->id);
+
 
             return $this->respondWithSuccess($listing, 'listing edited successfully', 201);
         });
@@ -96,6 +96,13 @@ class BusinessListingsController extends Controller
         $listing = $this->listingsRepo->findById($listing->id);
 
         if($listing) $listing->increment('views_count', 1);
+
+        return $this->respondWithSuccess($listing, 'listing retrived', 201);
+    }
+
+    public function adminListing(BusinessListings $listing)
+    {
+        $listing = $this->listingsRepo->findById($listing->id);
 
         return $this->respondWithSuccess($listing, 'listing retrived', 201);
     }

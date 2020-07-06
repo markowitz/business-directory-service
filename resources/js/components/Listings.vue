@@ -14,11 +14,11 @@
                     <th class="text-left p-3 px-4">Published</th>
                     <th class="text-left p-3 px-4" v-if="checkUser('super_admin')"></th>
                 </tr>
-                <tr  v-for="(listing, index) in listings" :key="index">
+                <tr class="table-hover"  v-for="(listing, index) in listings" :key="index">
                     <td class="p-3 px-4">
                         <img :src="listing.default_image" :alt="listing.name" width="100" height="100" style="object-fit: cover " />
                     </td>
-                    <td class="p-3 px-4">{{listing.name}}</td>
+                    <td class="p-3 px-4"><router-link :to="{name : 'view admin listing', params: {id: listing.id}}">{{listing.name}}</router-link></td>
                     <td class="py-3 px-4">{{listing.description}}</td>
                     <td class="p-3 px-4">{{listing.address}}</td>
                     <td class="p-3 px-4">{{listing.phone}}</td>
@@ -26,7 +26,7 @@
                         <span class="badge badge-success" v-if="listing.published">approved</span>
                         <span class="badge badge-warning" v-if="!listing.published">unapproved</span>
                     </td>
-                    <td class="p-3 px-4 flex justify-end" v-if="checkUser('super_admin') || !listing.published">
+                    <td  class="p-3 px-4 flex justify-end" v-if="checkUser('super_admin') || !listing.published">
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Action
@@ -153,7 +153,8 @@
                 disabled: false,
                 selectedCategory: [],
                 categories: [],
-                listing: []
+                listing: [],
+                showDropdown: false
             }
         },
         methods: {
@@ -165,15 +166,27 @@
                 }
             },
 
-            closeModal() {
-            this.$refs.showModal.active = false;
-            // this.role = 'member';
+            closeModal(ref) {
+            if(ref === 'showModal') {
+                    this.$refs.showModal.active = false;
+                }else {
+                    this.$refs.editModal.active = false;
+                }
+            },
+
+             category(listing) {
+                const categories = [];
+
+                listing.categories.filter((cat) => {
+                    categories.push(cat.id);
+                });
+                return categories;
             },
 
             openEditListing(listing) {
                 this.openModal();
                 this.listing = listing;
-               this.selectedCategory = listing.categories;
+               this.listing.categories = listing.categories;
             },
             fetchCategories() {
                 this.http.get('/api/admin/categories').then((res) => {
@@ -182,7 +195,6 @@
 				});
                 });
             },
-
             getListings() {
                 this.http.get('/api/admin/listings').then((res) => {
                     this.listings = res.data.data;
@@ -218,15 +230,28 @@
 
             },
             editListing() {
+                const categories = [];
+                this.listing.categories.filter(cat => {
+                    if(cat.id) {
+                        categories.push(cat.id);
+                    }
+                });
+
+                this.listing.categories = categories.length === 0 ? this.listing.categories : categories;
+
+
                 this.http.patch(`/api/admin/listings/${this.listing.id}`, this.listing).then((res) => {
-                    console.log(res.data);
+                    this.closeModal('editModal');
+                    this.getListings();
+                    this.$toastr.s('listing updated successfully');
                 });
             },
             approve(listing_id, status){
                 this.confirm('you want to approve this listing?').then(() => {
                 this.http.patch(`/api/admin/listings/${listing_id}`, {published : status}).then((res) => {
                     this.getListings();
-                    this.$toastr.s(res.data.message);
+                    let resp = status ? 'approved' : 'unapproved';
+                    this.$toastr.s(`listing ${resp} successfully`);
                 });
                 });
             },

@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin'], function() {
         Route::get('/', 'BusinessListingsController@listings');
         Route::patch('{listing}', 'BusinessListingsController@editListing');
         Route::delete('{listing}', 'BusinessListingsController@delete');
+        Route::get('{listing}', 'BusinessListingsController@adminListing');
     });
 });
 

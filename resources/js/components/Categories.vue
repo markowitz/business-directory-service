@@ -3,7 +3,7 @@
         <div class="pb-4">
             <button type="button" class="btn btn-primary"  @click="openModal">Add Category</button>
         </div>
-        <table class="table-auto text-md bg-white shadow-md rounded mb-4">
+        <table class="table-auto text-md bg-white shadow-md rounded mb-4 offset-md-2">
             <tbody>
                 <tr class="border-b">
                     <th class="text-left p-3 px-5">Name</th>
@@ -11,11 +11,14 @@
                     <th class="text-left p-3 px-4">Published</th>
                     <th class="text-left p-3 px-4" v-if="checkUser('super_admin')"></th>
                 </tr>
-                <tr  v-for="(category, index) in categories" :key="index">
+                <tr class="table-hover"  v-for="(category, index) in categories" :key="index">
                     <td class="p-3 px-4">{{category.name}}</td>
                     <td class="py-3 px-4">{{category.user.name}}</td>
-                    <td class="p-3 px-4">{{category.published}}</td>
-                    <td class="p-3 px-4 flex justify-end" v-if="checkUser('super_admin') || !category.published">
+                    <td class="p-3 px-4">
+                        <span class="badge badge-success" v-if="category.published">approved</span>
+                        <span class="badge badge-warning" v-if="!category.published">unapproved</span>
+                    </td>
+                    <td  class="p-3 px-4 flex justify-end" v-if="checkUser('super_admin') || !category.published">
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Action
@@ -32,11 +35,11 @@
             </tbody>
         </table>
 
-      <Modal title="Add Listing" ref="showModal" id="listing" @close="closeModal">
+      <Modal title="Add Category" ref="showModal" id="listing" @close="closeModal">
         <form @submit.prevent="addCategories">
         <div class="col-md-9 offset-md-1">
           <div class="pb-2">
-          <input v-model="name" type="text" class="form-control" placeholder="Business Name"
+          <input v-model="name" type="text" class="form-control" placeholder="add category"
           autocomplete="off" required>
           </div>
           <button class="btn btn-block btn-primary" type="submit" :disabled="disabled">
