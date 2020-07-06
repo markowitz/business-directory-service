@@ -39,4 +39,14 @@ php artisan migrate --seed
 ```
 
 
+# Reports a platform owner should see
+- Total number of listings
+- Total number of approved listings and pending listings
+- Total number of approved categories and pending categories
+- chart of daily visitors
+- Total number of all reviews
 
+# Other relevant features includes
+- make it possible for vistiors to add listings based on categories
+- On the listing page add filter by categories
+- Add option to verify listing
