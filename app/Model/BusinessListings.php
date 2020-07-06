@@ -86,6 +86,6 @@ class BusinessListings extends Model
     {
         return $query->leftJoin('reviews', 'reviews.listing_id', '=', 'business_listings.id')
                         ->select('business_listings.*', DB::raw("IF(AVG(reviews.rate), AVG(reviews.rate), 0) as avg_rating"))
-                        ->groupBy('business_listings.*')->orderBy('avg_rating', 'DESC');
+                        ->groupBy('id')->orderBy('avg_rating', 'DESC');
     }
 }
