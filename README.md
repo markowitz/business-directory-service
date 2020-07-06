@@ -37,6 +37,10 @@ cp .env.example .env
 ```php
 php artisan migrate --seed
 ```
+* Run npm install
 
+```npm
+npm install
+```
 
 
