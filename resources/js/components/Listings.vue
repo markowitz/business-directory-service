@@ -224,7 +224,7 @@
                             "Content-Type": "multipart/form-data"
                             }}).then((res) => {
                                 this.getListings();
-                                this.closeModal();
+                                this.closeModal('editModal');
                                 this.$toastr.s(res.data.message);
                             });
 
