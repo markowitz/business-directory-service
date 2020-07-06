@@ -20,12 +20,12 @@ class ListingsRepository extends BaseRepository
     public function search(string $search = null)
     {
 
-        return $this->listings->ratings()->approved()->querySearch($search)->get();
+        return $this->listings->ratings()->approved()->querySearch($search)->groupBy('business_listings.id')->get();
     }
 
     public function sortByRating()
     {
-        return $this->listings->ratings()->get();
+        return $this->listings->ratings()->groupBy('business_listings.id')->get();
     }
 
 }
