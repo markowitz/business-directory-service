@@ -225,7 +225,7 @@
                             }}).then((res) => {
                                 this.getListings();
                                 this.closeModal('editModal');
-                                this.$toastr.s(res.data.message);
+                                this.$toastr.s('listing added successfully');
                             });
 
             },
