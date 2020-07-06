@@ -65,5 +65,5 @@ php artisan storage:link
 * to access admin https://business-listings-app.herokuapp.com/admin
 * login details: super_admin: superadmin@gmail.com password: password, admin: icnwakanma@gmail.com password: password
 
-# NOTE
+# IMAGES NOT SHOWING
 - images won't show up as it's a free plan i used. But if tested locally it'll work perfectly fine.
