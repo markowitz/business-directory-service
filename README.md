@@ -43,6 +43,11 @@ php artisan migrate --seed
 npm install
 ```
 
+* link your storage folder to show uploaded images
+```php
+php artisan storage:link
+```
+
 # Reports a platform owner should see
 - Total number of listings
 - Total number of approved listings and pending listings
@@ -54,3 +59,9 @@ npm install
 - make it possible for vistiors to add listings based on categories
 - On the listing page add filter by categories
 - Add option to verify listing
+
+# Website link
+* https://business-listings-app.herokuapp.com/
+
+# NOTE
+- images won't show up as it's a free plan i used. But if tested locally it'll work perfectly fine.
